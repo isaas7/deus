@@ -7,6 +7,9 @@
 #include <ctime>
 #include <map>
 #include <cstdint> // For fixed-width integers
+                   //
+// this header file or "library" should be either included everywhere OR
+// simply make a library with cmakelists and include it like that
 
 // Macro for stack trace
 #define STACK_TRACE std::cerr << "Error at " << __FUNCTION__ << " (Line " << __LINE__ << ")\n"

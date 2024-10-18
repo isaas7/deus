@@ -1,6 +1,7 @@
 #include "../inc/foo.hpp"
+#include "../inc/foobar.hpp"
 
-int main() {
+bool foo() {
     Foo<int32> generator;  // Instantiate with int32 as the template type
 
     // Print the architecture
@@ -23,6 +24,19 @@ int main() {
 
     // Generate the structure
     generator.generate(numSrcFiles, numIncFiles, numTestFiles);
+    return true;
+}
 
-    return 0;
+bool foobar() {
+
+    Foobar<int> fooInstance(42);
+    Barfoo<Foobar, int> barInstance(42);
+
+    barInstance.show();
+
+    return true;
+}
+
+int main() {
+    return foobar();
 }
