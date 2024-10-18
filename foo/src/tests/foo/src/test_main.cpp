@@ -8,7 +8,7 @@ template <typename T>
 class Foobar {
 public:
     Foobar(T value) : value_(value) {}
-    void show() const {
+    void print() const {
         std::cout << "Foobar value: " << value_ << std::endl;
     }
 private:
