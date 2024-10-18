@@ -106,8 +106,8 @@ public:
     }
 
     void generate(T numSrcFiles, T numIncFiles, T numTestFiles) {
-        // Convert rootPath to std::filesystem::path
-        fs::path rootDir = rootPath;
+        // Convert rootPath to std::filesystem::path explicitly
+        fs::path rootDir = fs::path(rootPath);
 
         // Create root directories
         fs::path srcPath = rootDir / "src";
@@ -120,27 +120,22 @@ public:
 
         // Generate source files
         std::vector<std::string> names = {"foo", "bar", "baz", "qux", "quux"};
-        for (T i = 0; i < numSrcFiles; ++i) {
-            if (i < names.size()) {
-                fs::path filePath = srcPath / (names[i] + ".cpp");
-                createFile(filePath, generateFileContent(names[i], false));
-            }
+        for (T i = 0; i < numSrcFiles && i < names.size(); ++i) { // Ensure bounds check
+            fs::path filePath = srcPath / (names[i] + ".cpp");
+            createFile(filePath, generateFileContent(names[i], false));
         }
 
         // Generate header files
-        for (T i = 0; i < numIncFiles; ++i) {
-            if (i < names.size()) {
-                fs::path filePath = incPath / (names[i] + ".hpp");
-                createFile(filePath, generateFileContent(names[i], true));
-            }
+        for (T i = 0; i < numIncFiles && i < names.size(); ++i) { // Ensure bounds check
+            fs::path filePath = incPath / (names[i] + ".hpp");
+            createFile(filePath, generateFileContent(names[i], true));
         }
 
         // Generate test files
-        for (T i = 0; i < numTestFiles; ++i) {
-            if (i < names.size()) {
-                fs::path filePath = testPath / (names[i] + "_test.cpp");
-                createFile(filePath, "// Test for " + names[i] + "\n");
-            }
+        for (T i = 0; i < numTestFiles && i < names.size(); ++i) { // Ensure bounds check
+            fs::path filePath = testPath / (names[i] + "_test.cpp");
+            createFile(filePath, "// Test for " + names[i] + "\n");
         }
     }
 };
+
