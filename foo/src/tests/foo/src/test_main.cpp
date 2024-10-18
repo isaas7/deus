@@ -9,7 +9,7 @@ class Foobar {
 public:
     Foobar(T value) : value_(value) {}
     void print() const {
-        std::cout << "Foobar value: " << value_ << std::endl;
+        std::cout << "Foobar value: " << static_cast<typename std::decay<decltype(value_)>::type>(value_) << std::endl;
     }
 private:
     T value_;
@@ -25,7 +25,7 @@ template <typename T, template <typename> class SingleTemplate>
 class NestedTemplates<T, SingleTemplate> {
 public:
     NestedTemplates(T value) : instance_(value) {}
-    void show() const {
+    void print() const {
         instance_.print();
     }
 private:
@@ -37,8 +37,8 @@ template <typename T, template <typename> class First, template <typename> class
 class NestedTemplates<T, First, Rest...> {
 public:
     NestedTemplates(T value) : instance_(value) {}
-    void show() const {
-        instance_.show();
+    void print() const {
+        instance_.print();
     }
 private:
     First<NestedTemplates<T, Rest...>> instance_;
@@ -50,9 +50,9 @@ bool foobar() {
     NestedTemplates<int, Foobar, Foobar> doubleFooInstance(42);
     NestedTemplates<int, Foobar, Foobar, Foobar> tripleFooInstance(42);
 
-    fooInstance.show();
-    doubleFooInstance.show();
-    tripleFooInstance.show();
+    fooInstance.print();
+    doubleFooInstance.print();
+    tripleFooInstance.print();
 
     return true;
 }
