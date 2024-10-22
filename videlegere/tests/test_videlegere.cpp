@@ -15,7 +15,23 @@ using namespace cv;
 using tcp = asio::ip::tcp;
 namespace http = beast::http;
 
-// Function to host a basic webpage with lorem ipsum text
+// Structure to represent text regions with coordinates
+struct TextRegion {
+    std::string text;
+    Rect bounding_box;  // x, y, width, height
+};
+
+// Function to host a basic webpage with lorem ipsum text and map text regions
+std::map<std::string, TextRegion> get_text_regions() {
+    std::map<std::string, TextRegion> text_regions;
+    
+    // Define text and their corresponding coordinates (bounding box)
+    text_regions["title"] = { "Lorem Ipsum", Rect(50, 50, 200, 30) };
+    text_regions["paragraph"] = { "Lorem ipsum dolor sit amet, consectetur adipiscing elit...", Rect(50, 100, 400, 100) };
+
+    return text_regions;
+}
+
 void run_web_server() {
     try {
         asio::io_context ioc;
@@ -37,7 +53,7 @@ void run_web_server() {
 }
 
 // Function to detect eyes and track gaze location
-void track_eyes() {
+void track_eyes(const std::map<std::string, TextRegion>& text_regions) {
     CascadeClassifier face_cascade;
     CascadeClassifier eyes_cascade;
 
@@ -73,6 +89,13 @@ void track_eyes() {
                 Point center(face.x + eye.x + eye.width / 2, face.y + eye.y + eye.height / 2);
                 ellipse(frame, center, Size(eye.width / 2, eye.height / 2), 0, 0, 360, Scalar(255, 0, 0), 2);
                 log_file << "Eye detected at: " << center.x << ", " << center.y << "\n";
+
+                // Compare eye coordinates with text region bounding boxes
+                for (const auto& region : text_regions) {
+                    if (region.second.bounding_box.contains(center)) {
+                        log_file << "Looking at text: " << region.second.text << "\n";
+                    }
+                }
             }
         }
 
@@ -103,8 +126,11 @@ int main() {
     // Run the web server in a separate thread
     std::thread web_server_thread(run_web_server);
 
-    // Track eyes in the main thread
-    track_eyes();
+    // Get text regions for mapping
+    std::map<std::string, TextRegion> text_regions = get_text_regions();
+
+    // Track eyes in the main thread, with text region mapping
+    track_eyes(text_regions);
 
     // Join the web server thread
     web_server_thread.join();
@@ -114,4 +140,3 @@ int main() {
 
     return 0;
 }
-
