@@ -2,6 +2,8 @@
 
 The **deus** project comprises several components showcasing advanced knowledge of C++ and Objective-C features, including template programming, memory management, asynchronous networking, and Cocoa application development for macOS.
 
+- **```$/test_$.cpp```**: This file demonstrates a simple banking system using C++ templates for account management and Boost.Asio for asynchronous server-client communication. It showcases basic operations like deposits and withdrawals, and simulates transactions over a network, emphasizing the use of modern C++ features like smart pointers and asynchronous I/O. 
+
 - **cocoa/tests/test_cocoa.cpp**: Demonstrates creating a basic macOS GUI application using the Cocoa framework, focusing on window creation and memory management with `@autoreleasepool`.
   
 - **mail/src/tests/mail/src/test_mail.cpp**: Implements a generic mail server supporting both TCP and UDP using Boost.Asio, highlighting asynchronous I/O operations and template specialization.
@@ -15,6 +17,25 @@ The **deus** project comprises several components showcasing advanced knowledge 
 - **foo/src/tests/foo/inc/foobar.hpp**: Showcases template-based design with generic classes like `Foobar` and `Barfoo`, emphasizing template metaprogramming for building complex relationships between types.
 
 - **foo/src/tests/foo/inc/foo.hpp**: Leverages C++ features such as macros, architecture-specific code branching, and `<filesystem>` for dynamic directory and file creation, demonstrating proficiency in system-level programming.
+
+
+## ```$/test_$.cpp```
+
+This project demonstrates a simple banking system with account management and a server-client communication model using Boost.Asio for asynchronous networking.
+
+Features:
+Account Management: The Account class supports basic operations such as deposit and withdrawal, utilizing a templated Property class to manage and encapsulate account attributes (owner and balance).
+
+Server-Client Architecture:
+
+The BankingServer class handles incoming client connections and processes transaction requests asynchronously.
+The BankingClient class connects to the server and sends transaction messages, simulating simple banking transactions.
+Example Workflow:
+Two accounts (Alice and Bob) are created with initial balances.
+A transaction is performed where Alice sends money to Bob, and the new balances are updated and displayed.
+A banking server is launched, and a client sends a mock transaction message to demonstrate server-client communication.
+This project demonstrates the use of modern C++ features like templates, smart pointers, and asynchronous I/O with Boost.Asio to build a networked banking application.
+
 ## cocoa/tests/test_cocoa.cpp
 
 The code in `cocoa/tests/test_cocoa.cpp` is a simple example of using the Cocoa framework in Objective-C to create a macOS GUI application. It demonstrates the creation of an `NSApplication` object and an `NSWindow` with basic window properties such as title, size, and style. The window is set as the key window, which brings it to the front of the interface.
