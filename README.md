@@ -2,6 +2,8 @@
 
 The **deus** project comprises several components showcasing advanced knowledge of C++ and Objective-C features, including template programming, memory management, asynchronous networking, and Cocoa application development for macOS.
 
+- **```ripae/src/tests/test_ripae.cpp```**: This file demonstrates a simple banking system using C++ templates for account management and a multi-threaded transaction system. It emphasizes the use of templates, thread safety, custom data structures, and concurrency for simulating real-world banking operations.
+
 - **```$/test_$.cpp```**: This file demonstrates a simple banking system using C++ templates for account management and Boost.Asio for asynchronous server-client communication. It showcases basic operations like deposits and withdrawals, and simulates transactions over a network, emphasizing the use of modern C++ features like smart pointers and asynchronous I/O. 
 
 - **cocoa/tests/test_cocoa.cpp**: Demonstrates creating a basic macOS GUI application using the Cocoa framework, focusing on window creation and memory management with `@autoreleasepool`.
@@ -35,6 +37,23 @@ Two accounts (Alice and Bob) are created with initial balances.
 A transaction is performed where Alice sends money to Bob, and the new balances are updated and displayed.
 A banking server is launched, and a client sends a mock transaction message to demonstrate server-client communication.
 This project demonstrates the use of modern C++ features like templates, smart pointers, and asynchronous I/O with Boost.Asio to build a networked banking application.
+
+## ```ripae/src/tests/test_ripae.cpp```
+
+This project demonstrates a simple banking system with account management and a multi-threaded transaction handling model.
+
+### Features:
+- **Account Management**: The `Account` class supports basic operations such as deposit and withdrawal, utilizing a templated `Utility` class to manage and encapsulate account attributes like `id` and `balance`.
+
+- **Banking System**: The `Bank` class holds a collection of accounts, implemented with a custom stack (`Stack` class), which illustrates custom data structure management without reliance on the STL.
+
+- **Multi-Threaded Transactions**: The main function simulates concurrent transactions using multiple threads, highlighting key concurrency concepts such as:
+  - **Thread Safety**: `std::mutex` is used to protect shared resources, ensuring safe concurrent access.
+  - **Retry Mechanism and Idempotency**: If a transaction fails due to insufficient funds, a retry mechanism is demonstrated for idempotent withdrawal attempts, providing resilience in financial operations.
+
+- **Logging**: Simple logging macros (`LOG_FAILURE` and `LOG_SUCCESS`) provide easy-to-follow messages on the outcome of each transaction, helping trace the execution flow and debug issues.
+
+This project highlights advanced C++ concepts such as template programming, custom data structures, and concurrency. It illustrates a practical scenario of concurrent banking transactions, showcasing how thread safety and idempotency are critical for real-world financial applications.
 
 ## cocoa/tests/test_cocoa.cpp
 
